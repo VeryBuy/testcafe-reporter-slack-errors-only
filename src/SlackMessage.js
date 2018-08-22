@@ -6,16 +6,15 @@ module.exports = class SlackMessage {
 
         this.slack = new SlackNode();
         this.slack.setWebhook(process.env.TESTCAFE_SLACK_WEBHOOK);
-        this.message = [];
-        this.errorMessage = [];
+        this.errorMessage = {};
     }
 
-    addMessage (message) {
-        this.message.push(message);
-    }
-
-    addErrorMessage (message) {
-        this.errorMessage.push(message);
+    addErrorMessage (name, message) {
+        if (this.errorMessage.hasOwnProperty(name)) {
+            this.errorMessage[name].push(message);
+        } else {
+            this.errorMessage[name] = [message];
+        }
     }
 
     sendMessage (slackProperties = null) {
@@ -30,33 +29,32 @@ module.exports = class SlackMessage {
         });
     }
 
-    sendTestReport (title) {
+    sendTestReport (name, title) {
         this.sendMessage( 
             {
                 attachments: [{
                     color: '#f40c3a',
                     title: title,
-                    text: this.getTestReportMessage(),
+                    text: this.getTestReportMessage(name),
                     ts: Date.now()/1000
                 }]
             }
         );
     }
 
-    getTestReportMessage () {
-        let message = this.getSlackMessage();
-        const errorMessage = this.getErrorMessage();
+    getTestReportMessage (name) {
+        let message = '';
+        const errorMessage = this.errorMessage[name];
 
         if (errorMessage.length > 0)
-            message = message + '\n\n\n```' + this.getErrorMessage() + '```';
+            message += '\n\n\n```' + this.getErrorMessage(name) + '```';
+        
+        console.log(message);
+
         return message;
     }
 
-    getErrorMessage () {
-        return this.errorMessage.join('\n\n\n');
-    }
-
-    getSlackMessage () {
-        return this.message.join('\n');
+    getErrorMessage (name) {
+        return this.errorMessage[name].join('\n\n\n');
     }
 }

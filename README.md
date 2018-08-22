@@ -33,5 +33,31 @@ testCafe
     .run();
 ```
 
+## Important Note
+
+If you are looping over your test fixtures, each test fixture **must** have a unique name (otherwise error reports will be all grouped together under the same name, making it difficult to attribute the source of the error for each test)  
+
+For example:  
+
+```js
+//test.js  
+
+function testFlow(config) {
+
+    fixture(`${config.testName}`)
+        .page `http://example.com`
+
+        test('Example', async t => {
+            await config.testing();
+        });
+}
+
+const testSuite = getTestSuite();
+
+for (const config of testSuite) {
+    testFlow(config);
+}
+```
+
 ## Author
 Eden Adler 

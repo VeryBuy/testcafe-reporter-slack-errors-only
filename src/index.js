@@ -13,24 +13,24 @@ module.exports = function () {
             console.log(`Starting testcafe ${startTime}. \n Running ${testCount} tests in: ${userAgents}`);
         },
 
-        reportFixtureStart (name) {
-            this.currentFixtureName = name;
+        reportFixtureStart (fixtureName) {
+            this.currentFixtureName = fixtureName;
         },
 
-        reportTestDone (name, testRunInfo) {
+        reportTestDone (testName, testRunInfo) {
             this.hasErrors = testRunInfo.errs.length > 0;
 
             if (this.hasErrors) {
-                const title = `:no_entry_sign:  ${this.currentFixtureName} - ${name}`;
+                const title = `:no_entry_sign:  ${this.currentFixtureName} - ${testName}`;
 
-                this.renderErrors(testRunInfo.errs);
-                this.slack.sendTestReport(title);
+                this.renderErrors(this.currentFixtureName, testRunInfo.errs);
+                this.slack.sendTestReport(this.currentFixtureName, title);
             }
         },
 
-        renderErrors (errors) {
+        renderErrors (fixtureName, errors) {
             errors.forEach((error, id) => {
-                this.slack.addErrorMessage(this.formatError(error, `${id + 1} `));
+                this.slack.addErrorMessage(fixtureName, this.formatError(error, `${id + 1} `));
             });
         },
 

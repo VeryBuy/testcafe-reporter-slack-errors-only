@@ -18,7 +18,7 @@ gulp.task('watch', gulp.series('build', function () {
     gulp.watch('src/*.js', 'build');
 }));
 
-gulp.task('test', gulp.series('build', function test () {
+gulp.task('test', gulp.series('build', function test (done) {
     // return gulp
     //     .src('test/**.js')
     //     .pipe(mocha({
@@ -27,7 +27,7 @@ gulp.task('test', gulp.series('build', function test () {
     //         inspect: true,
     //         timeout:  typeof v8debug === 'undefined' ? 2000 : Infinity // NOTE: disable timeouts in debug
     //     }));
-    process.exit(0);
+    done();
 }));
 
 gulp.task('preview', gulp.series('build', function preview () {

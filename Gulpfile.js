@@ -3,11 +3,11 @@ var babel   = require('gulp-babel');
 var mocha   = require('gulp-mocha');
 var del     = require('del');
 
-gulp.task('clean', function (cb) {
-    del('lib', cb);
+gulp.task('clean', function () {
+    return del('lib');
 });
 
-gulp.task('build', gulp.series('clean', function () {
+gulp.task('build', gulp.series('clean', function build () {
     return gulp
         .src('src/**/*.js')
         .pipe(babel())
@@ -15,10 +15,10 @@ gulp.task('build', gulp.series('clean', function () {
 }));
 
 gulp.task('watch', gulp.series('build', function () {
-    gulp.watch('src/*.js', ['build']);
+    gulp.watch('src/*.js', 'build');
 }));
 
-gulp.task('test', gulp.series('build', function () {
+gulp.task('test', gulp.series('build', function test () {
     return gulp
         .src('test/**.js')
         .pipe(mocha({

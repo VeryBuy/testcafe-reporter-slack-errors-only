@@ -1,6 +1,6 @@
 {
   "name": "testcafe-reporter-slack-errors-only",
-  "version": "1.5.1",
+  "version": "1.6.0",
   "description": "slack-errors-only TestCafe reporter plugin.",
   "repository": "https://github.com/edenadler/testcafe-reporter-slack-errors-only",
   "author": {

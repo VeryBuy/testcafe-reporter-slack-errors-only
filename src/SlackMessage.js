@@ -9,19 +9,6 @@ module.exports = class SlackMessage {
         this.errorMessage = {};
     }
 
-    sendStaticMessage (message, slackProperties) {
-        this.slack.webhook(Object.assign({
-            channel: process.env.TESTCAFE_SLACK_CHANNEL,
-            username: process.env.TESTCAFE_SLACK_BOT,
-            text: message
-        }, slackProperties), function (err, response) {
-            if (err) {
-                console.log('Unable to send a message to slack');
-                console.log(response);
-            }
-        });
-    }
-
     addErrorMessage (name, message) {
         if (this.errorMessage.hasOwnProperty(name)) {
             this.errorMessage[name].push(message);

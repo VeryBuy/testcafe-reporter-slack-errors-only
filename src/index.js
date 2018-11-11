@@ -10,7 +10,7 @@ module.exports = function () {
             this.startTime = startTime;
             this.testCount = testCount;
 
-            this.slack.sendStaticMessage(`Starting testcafe ${startTime}. \n Running ${testCount} tests in: ${userAgents}`);
+            console.log(`Starting testcafe ${startTime}. \n Running ${testCount} tests in: ${userAgents}`);
         },
 
         reportFixtureStart (fixtureName) {
@@ -40,7 +40,7 @@ module.exports = function () {
                 .duration(durationMs)
                 .format('h[h] mm[m] ss[s]');
 
-            this.slack.sendStaticMessage(`\n*${this.testCount - passed}/${this.testCount} failed* (Duration: ${durationStr})`);
+            console.log(`\n*${this.testCount - passed}/${this.testCount} failed* (Duration: ${durationStr})`);
         }
     };
 }

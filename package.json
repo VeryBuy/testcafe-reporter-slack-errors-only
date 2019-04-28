@@ -36,7 +36,9 @@
     "testcafe": "^0.20.5"
   },
   "dependencies": {
+    "aws-sdk": "^2.444.0",
     "dotenv": "^6.0.0",
+    "shortid": "^2.2.14",
     "slack-node": "^0.1.8"
   }
 }
